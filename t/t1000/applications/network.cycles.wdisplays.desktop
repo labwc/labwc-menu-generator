@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=wdisplays
+Comment=Wlroots display configuration
+Categories=GTK;Settings;DesktopSettings;
+Exec=wdisplays
+Icon=network.cycles.wdisplays

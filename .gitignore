@@ -1,0 +1,4 @@
+*.o
+labwc-menu-generator
+t/test-results/*
+t/trash*

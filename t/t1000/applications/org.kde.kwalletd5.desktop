@@ -1,0 +1,37 @@
+# SPDX-FileCopyrightText: None
+# SPDX-License-Identifier: CC0-1.0
+
+[Desktop Entry]
+Type=Application
+Exec=kwalletd5
+Name=KDE Wallet Service
+Name[ar]=خدمة حافظة كدي
+Name[az]=KDE Cüzdanı Xidməti
+Name[ca]=Servei de carteres de KDE
+Name[ca@valencia]=Servei de carteres de KDE
+Name[cs]=Služba úschovny KDE
+Name[de]=KDE-Dienst für Passwortspeicher
+Name[en_GB]=KDE Wallet Service
+Name[es]=Servicio de carteras de KDE
+Name[fi]=KDE:n lompakkopalvelin
+Name[fr]=Serveur de portefeuilles de KDE
+Name[hu]=KDE jelszókezelő szolgáltatás
+Name[ia]=Servicio de Portafolio de KDE
+Name[it]=Servizio portafogli di KDE
+Name[ko]=KDE 지갑 서비스
+Name[nl]=KDE Portefeuilleservice
+Name[pl]=Usługa Portfela KDE
+Name[pt]=Serviço da Carteira do KDE
+Name[pt_BR]=Serviço de carteiras do KDE
+Name[ro]=Serviciul de portofel KDE
+Name[ru]=Служба бумажника KDE
+Name[sk]=Služba KDE Wallet
+Name[sl]=Storitev KDE listnice
+Name[sv]=KDE:s plånbokstjänst
+Name[tr]=KDE Cüzdan Hizmeti
+Name[uk]=Служба торбинок KDE
+Name[vi]=Dịch vụ ví KDE
+Name[x-test]=xxKDE Wallet Servicexx
+Name[zh_CN]=KDE 钱包服务
+NoDisplay=true
+Icon=kwalletmanager

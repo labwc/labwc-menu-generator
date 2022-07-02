@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu>
+<menu id="root-menu" label="root-menu">
+	<menu id="Graphics" label="Grafik">
+		<item label="Bildvisare" icon="gpicview">
+			<action name="Execute"><command>gpicview</command></action>
+		</item>
+		<item label="Dokumentvisare" icon="org.gnome.Evince">
+			<action name="Execute"><command>evince</command></action>
+		</item>
+		<item label="Flameshot" icon="org.flameshot.Flameshot">
+			<action name="Execute"><command>/usr/bin/flameshot</command></action>
+		</item>
+		<item label="GNU:s bildmanipuleringsprogram" icon="gimp">
+			<action name="Execute"><command>gimp-2.10</command></action>
+		</item>
+		<item label="Inkscape" icon="org.inkscape.Inkscape">
+			<action name="Execute"><command>inkscape</command></action>
+		</item>
+		<item label="MATE färgval" icon="gtk-select-color">
+			<action name="Execute"><command>mate-color-select</command></action>
+		</item>
+		<item label="mtPaint" icon="mtpaint">
+			<action name="Execute"><command>mtpaint</command></action>
+		</item>
+	</menu> <!-- Graphics -->
+	<menu id="Settings" label="Inställningar">
+		<item label="nitrogen" icon="nitrogen">
+			<action name="Execute"><command>nitrogen</command></action>
+		</item>
+		<item label="Panelhanterare" icon="tint2conf">
+			<action name="Execute"><command>tint2conf</command></action>
+		</item>
+		<item label="Program" icon="preferences-desktop">
+			<action name="Execute"><command>libfm-pref-apps</command></action>
+		</item>
+		<item label="Skrivbordsinställningar" icon="user-desktop">
+			<action name="Execute"><command>pcmanfm --desktop-pref</command></action>
+		</item>
+		<item label="Textredigerarinställningar" icon="org.xfce.mousepad">
+			<action name="Execute"><command>mousepad --preferences</command></action>
+		</item>
+		<item label="wdisplays" icon="network.cycles.wdisplays">
+			<action name="Execute"><command>wdisplays</command></action>
+		</item>
+	</menu> <!-- Settings -->
+	<menu id="Internet" label="Internet">
+		<item label="Avahi SSH-serverbläddrare" icon="network-wired">
+			<action name="Execute"><command>/usr/bin/bssh</command></action>
+		</item>
+		<item label="Avahi VNC-serverbläddrare" icon="network-wired">
+			<action name="Execute"><command>/usr/bin/bvnc</command></action>
+		</item>
+		<item label="Chromium" icon="chromium">
+			<action name="Execute"><command>/usr/bin/chromium</command></action>
+		</item>
+		<item label="Firefox" icon="firefox">
+			<action name="Execute"><command>/usr/lib/firefox/firefox</command></action>
+		</item>
+		<item label="HexChat" icon="io.github.Hexchat">
+			<action name="Execute"><command>hexchat --existing</command></action>
+		</item>
+		<item label="NetSurf Web Browser" icon="netsurf.png">
+			<action name="Execute"><command>netsurf</command></action>
+		</item>
+		<item label="qBittorrent" icon="qbittorrent">
+			<action name="Execute"><command>qbittorrent</command></action>
+		</item>
+		<item label="Vivaldi" icon="vivaldi">
+			<action name="Execute"><command>/usr/bin/vivaldi-stable</command></action>
+		</item>
+	</menu> <!-- Internet -->
+	<menu id="Office" label="Kontorsprogram">
+		<item label="Dokumentvisare" icon="org.gnome.Evince">
+			<action name="Execute"><command>evince</command></action>
+		</item>
+		<item label="Gnumeric" icon="gnumeric">
+			<action name="Execute"><command>gnumeric</command></action>
+		</item>
+	</menu> <!-- Office -->
+	<menu id="Multimedia" label="Multimedia">
+		<item label="Audacious" icon="audacious">
+			<action name="Execute"><command>audacious</command></action>
+		</item>
+		<item label="mpv Media Player" icon="mpv">
+			<action name="Execute"><command>mpv --player-operation-mode=pseudo-gui --</command></action>
+		</item>
+		<item label="Qt V4L2 test Utility" icon="qv4l2">
+			<action name="Execute"><command>qv4l2</command></action>
+		</item>
+		<item label="Qt V4L2 video capture utility" icon="qvidcap">
+			<action name="Execute"><command>qvidcap</command></action>
+		</item>
+		<item label="VLC media player" icon="vlc">
+			<action name="Execute"><command>/usr/bin/vlc --started-from-file</command></action>
+		</item>
+	</menu> <!-- Multimedia -->
+	<menu id="System" label="System">
+		<item label="Alacritty" icon="Alacritty">
+			<action name="Execute"><command>alacritty</command></action>
+		</item>
+		<item label="Avahi Zeroconf-bläddrare" icon="network-wired">
+			<action name="Execute"><command>/usr/bin/avahi-discover</command></action>
+		</item>
+		<item label="Filhanteraren PCManFM" icon="system-file-manager">
+			<action name="Execute"><command>pcmanfm</command></action>
+		</item>
+		<item label="Foot" icon="foot">
+			<action name="Execute"><command>foot</command></action>
+		</item>
+		<item label="Foot Client" icon="foot">
+			<action name="Execute"><command>footclient</command></action>
+		</item>
+		<item label="Foot Server" icon="foot">
+			<action name="Execute"><command>foot --server</command></action>
+		</item>
+		<item label="OpenJDK Java 11 Console" icon="java11-openjdk">
+			<action name="Execute"><command>/usr/lib/jvm/java-11-openjdk/bin/jconsole</command></action>
+		</item>
+		<item label="OpenJDK Java 11 Shell" icon="java11-openjdk">
+			<action name="Execute"><command>/usr/lib/jvm/java-11-openjdk/bin/jshell</command></action>
+		</item>
+		<item label="QTerminal" icon="utilities-terminal">
+			<action name="Execute"><command>qterminal</command></action>
+		</item>
+		<item label="Rullgardinsterminal" icon="utilities-terminal">
+			<action name="Execute"><command>qterminal --drop</command></action>
+		</item>
+		<item label="Sakura" icon="terminal-tango">
+			<action name="Execute"><command>sakura</command></action>
+		</item>
+		<item label="Tint2" icon="tint2">
+			<action name="Execute"><command>tint2</command></action>
+		</item>
+		<item label="urxvt" icon="utilities-terminal">
+			<action name="Execute"><command>urxvt</command></action>
+		</item>
+		<item label="urxvt (client)" icon="utilities-terminal">
+			<action name="Execute"><command>urxvtc</command></action>
+		</item>
+		<item label="urxvt (tabbed)" icon="utilities-terminal">
+			<action name="Execute"><command>urxvt-tabbed</command></action>
+		</item>
+		<item label="UXTerm" icon="xterm-color_48x48">
+			<action name="Execute"><command>uxterm</command></action>
+		</item>
+		<item label="XTerm" icon="xterm-color_48x48">
+			<action name="Execute"><command>xterm</command></action>
+		</item>
+	</menu> <!-- System -->
+	<menu id="Accessories" label="Tillbehör">
+		<item label="Bildvisare" icon="gpicview">
+			<action name="Execute"><command>gpicview</command></action>
+		</item>
+		<item label="Filer" icon="org.gnome.Nautilus">
+			<action name="Execute"><command>nautilus --new-window</command></action>
+		</item>
+		<item label="Filhanteraren PCManFM" icon="system-file-manager">
+			<action name="Execute"><command>pcmanfm</command></action>
+		</item>
+		<item label="Leafpad" icon="leafpad">
+			<action name="Execute"><command>leafpad</command></action>
+		</item>
+		<item label="Mousepad" icon="org.xfce.mousepad">
+			<action name="Execute"><command>mousepad</command></action>
+		</item>
+		<item label="nitrogen" icon="nitrogen">
+			<action name="Execute"><command>nitrogen</command></action>
+		</item>
+		<item label="picom" icon="picom">
+			<action name="Execute"><command>picom</command></action>
+		</item>
+		<item label="Sakura" icon="terminal-tango">
+			<action name="Execute"><command>sakura</command></action>
+		</item>
+		<item label="Vim" icon="gvim">
+			<action name="Execute"><command>vim</command></action>
+		</item>
+	</menu> <!-- Accessories -->
+	<menu id="Development" label="Utveckling">
+		<item label="CMake" icon="CMakeSetup">
+			<action name="Execute"><command>cmake-gui</command></action>
+		</item>
+		<item label="Geany" icon="geany">
+			<action name="Execute"><command>geany</command></action>
+		</item>
+		<item label="GTK Demo" icon="org.gtk.Demo4">
+			<action name="Execute"><command>gtk4-demo</command></action>
+		</item>
+		<item label="Icon Browser" icon="org.gtk.IconBrowser4">
+			<action name="Execute"><command>gtk4-icon-browser</command></action>
+		</item>
+		<item label="IntelliJ IDEA Community Edition" icon="idea">
+			<action name="Execute"><command>/usr/bin/idea</command></action>
+		</item>
+		<item label="Print Editor" icon="org.gtk.PrintEditor4">
+			<action name="Execute"><command>gtk4-print-editor</command></action>
+		</item>
+		<item label="Widget Factory" icon="org.gtk.WidgetFactory4">
+			<action name="Execute"><command>gtk4-widget-factory</command></action>
+		</item>
+	</menu> <!-- Development -->
+</menu> <!-- root-menu -->
+</openbox_menu>
