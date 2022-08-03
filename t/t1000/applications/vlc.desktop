@@ -220,7 +220,6 @@ Name[zh_TW]=VLC 媒體播放器
 GenericName[zh_TW]=媒體播放器
 Comment[zh_TW]=讀取、擷取與廣播您的多媒體串流
 Exec=/usr/bin/vlc --started-from-file %U
-TryExec=/usr/bin/vlc
 Icon=vlc
 Terminal=false
 Type=Application

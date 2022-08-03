@@ -7,7 +7,6 @@ GenericName=X compositor
 Comment=An X compositor
 Categories=Utility;
 Keywords=compositor;composite manager;window effects;transparency;opacity;
-TryExec=compton
 Exec=compton
 Icon=compton
 # Thanks to quequotion for providing this file!

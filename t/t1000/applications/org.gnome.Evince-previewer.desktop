@@ -139,7 +139,6 @@ Comment[zh_CN]=打印前预览
 Comment[zh_HK]=列印前先預覽
 Comment[zh_TW]=列印前先預覽
 Comment=Preview before printing
-TryExec=evince-previewer
 Exec=evince-previewer %U
 StartupNotify=true
 Terminal=false

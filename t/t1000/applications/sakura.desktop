@@ -90,7 +90,6 @@ Comment[uk]=Використати командну лінію
 Comment[vi]=Sử dụng dòng lệnh
 Comment[zh_CN]=使用命令行
 Comment[zh_TW]=使用指令列
-TryExec=sakura
 Exec=sakura
 Icon=terminal-tango
 Type=Application

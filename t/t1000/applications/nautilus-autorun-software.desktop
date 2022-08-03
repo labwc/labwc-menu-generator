@@ -75,7 +75,6 @@ Name[zh_CN]=运行软件
 Name[zh_HK]=執行軟件
 Name[zh_TW]=執行軟體
 Name=Run Software
-TryExec=nautilus-autorun-software
 Exec=nautilus-autorun-software %u
 # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 Icon=application-x-executable

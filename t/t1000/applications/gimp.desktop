@@ -248,7 +248,6 @@ Keywords[uk]=GIMP;graphic;design;illustration;painting;гімп;ґімп;гра�
 Keywords[vi]=GIMP;graphic;design;illustration;painting;đồ họa;do hoa;thiết kế;thiet ke;vẽ;ve;minh họa;minh hoa;hội họa;hoi hoa;
 Keywords[zh_CN]=GIMP;图形;设计;绘画;graphic;design;illustration;painting;
 Exec=gimp-2.10 %U
-TryExec=gimp-2.10
 Icon=gimp
 Terminal=false
 Categories=Graphics;2DGraphics;RasterGraphics;GTK;

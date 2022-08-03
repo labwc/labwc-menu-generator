@@ -5,7 +5,6 @@ Type=Application
 Name=mtPaint
 GenericName=Image Editor
 Comment=Painting program to create pixel art and manipulate digital photos
-TryExec=mtpaint
 Exec=mtpaint %F
 Icon=mtpaint
 Terminal=false

@@ -1,6 +1,5 @@
 [Desktop Entry]
 Type=Application
-TryExec=alacritty
 Exec=alacritty
 Icon=Alacritty
 Terminal=false

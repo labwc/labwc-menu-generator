@@ -224,7 +224,6 @@ Keywords[vi]=pdf;ps;postscript;dvi;xps;djvu;tiff;document;tài liệu;tai lieu;p
 Keywords[zh_CN]=pdf;ps;postscript;dvi;xps;djvu;tiff;document;presentation;viewer;文档;演示;幻灯;查看器;
 Keywords[zh_TW]=pdf;ps;postscript;dvi;xps;djvu;tiff;document;presentation;viewer;evince;文件;簡報;檢視器;
 Keywords=pdf;ps;postscript;dvi;xps;djvu;tiff;document;presentation;viewer;evince;
-TryExec=evince
 Exec=evince %U
 StartupNotify=true
 Terminal=false
