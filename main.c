@@ -109,7 +109,7 @@ print_apps_for_one_directory(GList *apps, struct dir *dir, GString *submenu)
 		 * dir->categories often contains a semi-colon at the end,
 		 * giving an empty field which we ignore
 		 */
-		if (app->categories[0] == '\0') {
+		if (!app->categories || app->categories[0] == '\0') {
 			continue;
 		}
 
