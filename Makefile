@@ -3,8 +3,8 @@
 .POSIX:
 
 RM ?= rm -f
-CFLAGS += -g -Wall -Os -std=c99 -Wextra
 MAKEFLAGS += --no-print-directory
+CFLAGS += -g -Wall -Os -std=c99 -Wextra
 CFLAGS += `pkg-config --cflags glib-2.0`
 LIBS += `pkg-config --libs glib-2.0`
 LDFLAGS += $(LIBS)
@@ -21,8 +21,6 @@ all: $(PROG)
 
 $(PROG): main.o desktop.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
-
-%.o : src/%.c
 
 clean:
 	@$(RM) $(PROG) *.o

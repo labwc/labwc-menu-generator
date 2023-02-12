@@ -16,6 +16,8 @@
 #include "schema.h"
 
 static bool no_duplicates;
+static bool no_footer;
+static bool no_header;
 
 static const char labwc_menu_generator_usage[] =
 "Usage: labwc-menu-generator [options...]\n"
@@ -133,9 +135,11 @@ print_menu(GList *dirs, GList *apps)
 {
 	GString *submenu = g_string_new(NULL);
 
-	printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-	printf("<openbox_menu>\n");
-	printf("<menu id=\"root-menu\" label=\"root-menu\">\n");
+	if (!no_header) {
+		printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+		printf("<openbox_menu>\n");
+		printf("<menu id=\"root-menu\" label=\"root-menu\">\n");
+	}
 
 	/* Handle all directories except 'Other' */
 	GList *iter;
@@ -173,8 +177,10 @@ print_menu(GList *dirs, GList *apps)
 		printf("\t</menu> <!-- %s -->\n", dir->name);
 	}
 
-	printf("</menu> <!-- root-menu -->\n");
-	printf("</openbox_menu>\n");
+	if (!no_footer) {
+		printf("</menu> <!-- root-menu -->\n");
+		printf("</openbox_menu>\n");
+	}
 
 	g_string_free(submenu, TRUE);
 }
@@ -257,8 +263,12 @@ int
 main(int argc, char **argv)
 {
 	int c;
-	while ((c = getopt(argc, argv, "hn")) != -1) {
+	while ((c = getopt(argc, argv, "bhn")) != -1) {
 		switch (c) {
+		case 'b':
+			no_footer = true;
+			no_header = true;
+			break;
 		case 'n':
 			no_duplicates = false;
 			break;
