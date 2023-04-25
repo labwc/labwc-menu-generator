@@ -19,10 +19,18 @@ static bool no_duplicates;
 static bool no_footer;
 static bool no_header;
 
+static const struct option long_options[] = {
+	{"bare", no_argument, NULL, 'b'},
+	{"help", no_argument, NULL, 'h'},
+	{"no-duplicates", no_argument, NULL, 'n'},
+	{0, 0, 0, 0}
+};
+
 static const char labwc_menu_generator_usage[] =
 "Usage: labwc-menu-generator [options...]\n"
-"    -h                  show help message and quit\n"
-"    -n                  limit desktop entries to one directory only\n";
+"  -b, --bare               Show no header or footer\n"
+"  -h, --help               Show help message and quit\n"
+"  -n, --no-duplicates      Limit desktop entries to one directory only\n";
 
 static void
 usage(void)
@@ -263,7 +271,12 @@ int
 main(int argc, char **argv)
 {
 	int c;
-	while ((c = getopt(argc, argv, "bhn")) != -1) {
+	while (1) {
+		int index = 0;
+		c = getopt_long(argc, argv, "bhn", long_options, &index);
+		if (c == -1) {
+			break;
+		}
 		switch (c) {
 		case 'b':
 			no_footer = true;
@@ -276,6 +289,9 @@ main(int argc, char **argv)
 		default:
 			usage();
 		}
+	}
+	if (optind < argc) {
+		usage();
 	}
 
 	GList *apps = desktop_entries_create();
