@@ -18,11 +18,13 @@
 static bool no_duplicates;
 static bool no_footer;
 static bool no_header;
+static bool pipemenu;
 
 static const struct option long_options[] = {
 	{"bare", no_argument, NULL, 'b'},
 	{"help", no_argument, NULL, 'h'},
 	{"no-duplicates", no_argument, NULL, 'n'},
+	{"pipemenu", no_argument, NULL, 'p'},
 	{0, 0, 0, 0}
 };
 
@@ -30,7 +32,8 @@ static const char labwc_menu_generator_usage[] =
 "Usage: labwc-menu-generator [options...]\n"
 "  -b, --bare               Show no header or footer\n"
 "  -h, --help               Show help message and quit\n"
-"  -n, --no-duplicates      Limit desktop entries to one directory only\n";
+"  -n, --no-duplicates      Limit desktop entries to one directory only\n"
+"  -p, --pipemenu           Output in pipemenu format\n";
 
 static void
 usage(void)
@@ -144,9 +147,13 @@ print_menu(GList *dirs, GList *apps)
 	GString *submenu = g_string_new(NULL);
 
 	if (!no_header) {
-		printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-		printf("<openbox_menu>\n");
-		printf("<menu id=\"root-menu\" label=\"root-menu\">\n");
+		if (pipemenu) {
+			printf("<openbox_pipe_menu>\n");
+		} else {
+			printf("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+			printf("<openbox_menu>\n");
+			printf("<menu id=\"root-menu\" label=\"root-menu\">\n");
+		}
 	}
 
 	/* Handle all directories except 'Other' */
@@ -186,8 +193,12 @@ print_menu(GList *dirs, GList *apps)
 	}
 
 	if (!no_footer) {
-		printf("</menu> <!-- root-menu -->\n");
-		printf("</openbox_menu>\n");
+		if (pipemenu) {
+			printf("</openbox_pipe_menu>\n");
+		} else {
+			printf("</menu> <!-- root-menu -->\n");
+			printf("</openbox_menu>\n");
+		}
 	}
 
 	g_string_free(submenu, TRUE);
@@ -273,7 +284,7 @@ main(int argc, char **argv)
 	int c;
 	while (1) {
 		int index = 0;
-		c = getopt_long(argc, argv, "bhn", long_options, &index);
+		c = getopt_long(argc, argv, "bhnp", long_options, &index);
 		if (c == -1) {
 			break;
 		}
@@ -283,7 +294,10 @@ main(int argc, char **argv)
 			no_header = true;
 			break;
 		case 'n':
-			no_duplicates = false;
+			no_duplicates = true;
+			break;
+		case 'p':
+			pipemenu = true;
 			break;
 		case 'h':
 		default:
