@@ -61,12 +61,12 @@ print_app_to_buffer(struct app *app, GString *submenu)
 {
 	/* TODO: handle app->terminal */
 	g_string_append_printf(submenu,
-		"\t\t<item label=\"%s\" icon=\"%s\">\n",
+		"    <item label=\"%s\" icon=\"%s\">\n",
 		app->name_localized ? app->name_localized : app->name, app->icon);
 	g_string_append_printf(submenu,
-		"\t\t\t<action name=\"Execute\"><command>%s</command></action>\n",
+		"      <action name=\"Execute\"><command>%s</command></action>\n",
 		app->exec);
-	g_string_append_printf(submenu, "\t\t</item>\n");
+	g_string_append_printf(submenu, "    </item>\n");
 }
 
 static bool
@@ -169,10 +169,10 @@ print_menu(GList *dirs, GList *apps)
 		if (!submenu->len) {
 			continue;
 		}
-		printf("\t<menu id=\"%s\" label=\"%s\">\n",
+		printf("  <menu id=\"%s\" label=\"%s\">\n",
 			dir->name, dir->name_localized ? : dir->name);
 		printf("%s", submenu->str);
-		printf("\t</menu> <!-- %s -->\n", dir->name);
+		printf("  </menu> <!-- %s -->\n", dir->name);
 	}
 
 	/* Put any left over applications in 'Other' */
@@ -186,10 +186,10 @@ print_menu(GList *dirs, GList *apps)
 		if (!submenu->len) {
 			continue;
 		}
-		printf("\t<menu id=\"%s\" label=\"%s\">\n",
+		printf("  <menu id=\"%s\" label=\"%s\">\n",
 			dir->name, dir->name_localized ? : dir->name);
 		printf("%s", submenu->str);
-		printf("\t</menu> <!-- %s -->\n", dir->name);
+		printf("  </menu> <!-- %s -->\n", dir->name);
 	}
 
 	if (!no_footer) {
