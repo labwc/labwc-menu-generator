@@ -8,7 +8,12 @@
 # https://docs.voidlinux.org/xbps/repositories/mirrors/changing.html
 
 name: CI
-on: [pull_request]
+on:
+  pull_request:
+  push:
+    branches:
+      - 'master'
+
 jobs:
   build:
     name: Build
