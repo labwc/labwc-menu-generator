@@ -4,7 +4,14 @@
  * Copyright (C) Johan Malm 2022
  */
 #define _POSIX_C_SOURCE 200809L
-#define _DEFAULT_SOURCE
+
+/* Allow extended dirent entries */
+#if defined(__linux__)
+	#define _DEFAULT_SOURCE
+#else
+	#define __BSD_VISIBLE 1
+#endif
+
 #include <ctype.h>
 #include <glib.h>
 #include <stdio.h>
