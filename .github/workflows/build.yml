@@ -18,7 +18,6 @@ jobs:
       matrix:
         name: [
           Arch,
-          Debian,
           FreeBSD,
           Void-musl
         ]
@@ -26,12 +25,6 @@ jobs:
           - name: Arch
             os: ubuntu-latest
             container: archlinux:base-devel
-            env:
-              TARGET: 'sh -xe'
-
-          - name: Debian
-            os: ubuntu-latest
-            container: debian:testing
             env:
               TARGET: 'sh -xe'
 
@@ -58,17 +51,7 @@ jobs:
         run: |
           pacman-key --init
           pacman -Syu --noconfirm
-          pacman -S --noconfirm git meson clang wlroots libdrm libinput \
-            wayland-protocols cairo pango libxml2 xorg-xwayland librsvg libdisplay-info
-
-      - name: Install Debian Testing dependencies
-        if: matrix.name == 'Debian'
-        run: |
-          sed -i '/^Types/ s/deb/& deb-src/' /etc/apt/sources.list.d/debian.sources
-          apt-get update
-          apt-get upgrade -y
-          apt-get install -y git gcc clang
-          apt-get build-dep -y labwc
+          pacman -S --noconfirm meson gcc clang pkgconf glib2
 
       - name: Install FreeBSD dependencies
         if: matrix.name == 'FreeBSD'
@@ -77,9 +60,7 @@ jobs:
           usesh: true
           prepare: |
             sed -i '' 's/quarterly/latest/' /etc/pkg/FreeBSD.conf
-            pkg set -yn pkg:mesa-dri # hack to skip llvm dependency
-            pkg install -y git meson gcc pkgconf cairo pango evdev-proto \
-              hwdata wayland-protocols wlroots libdisplay-info
+            pkg install -y meson gcc pkgconf devel/glib20
           run: echo "setup done"
 
       - name: Install Void Linux dependencies
@@ -91,9 +72,7 @@ jobs:
             /etc/xbps.d/*-repository-*.conf
           xbps-install -Syu || xbps-install -yu xbps
           xbps-install -Syu
-          xbps-install -y git meson gcc clang pkg-config scdoc \
-            cairo-devel glib-devel libpng-devel librsvg-devel libxml2-devel \
-            pango-devel wlroots0.17-devel
+          xbps-install -y meson gcc clang pkg-config glib-devel
 
       - name: Build with gcc
         run: |
