@@ -14,7 +14,7 @@ glib = dependency('glib-2.0')
 
 executable(
   meson.project_name(),
-  sources: files('main.c', 'desktop.c'),
+  sources: files('main.c', 'desktop.c', 'ignore.c'),
   dependencies: [glib],
   install: true,
 )

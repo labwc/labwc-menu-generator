@@ -13,6 +13,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "desktop.h"
+#include "ignore.h"
 #include "schema.h"
 
 static bool no_duplicates;
@@ -23,6 +24,7 @@ static bool pipemenu;
 static const struct option long_options[] = {
 	{"bare", no_argument, NULL, 'b'},
 	{"help", no_argument, NULL, 'h'},
+	{"ignore", required_argument, NULL, 'i'},
 	{"no-duplicates", no_argument, NULL, 'n'},
 	{"pipemenu", no_argument, NULL, 'p'},
 	{0, 0, 0, 0}
@@ -32,6 +34,7 @@ static const char labwc_menu_generator_usage[] =
 "Usage: labwc-menu-generator [options...]\n"
 "  -b, --bare               Show no header or footer\n"
 "  -h, --help               Show help message and quit\n"
+"  -i, --ignore <file>      Specify file listing .desktop files to ignore\n"
 "  -n, --no-duplicates      Limit desktop entries to one directory only\n"
 "  -p, --pipemenu           Output in pipemenu format\n";
 
@@ -284,7 +287,7 @@ main(int argc, char **argv)
 	int c;
 	while (1) {
 		int index = 0;
-		c = getopt_long(argc, argv, "bhnp", long_options, &index);
+		c = getopt_long(argc, argv, "bhi:np", long_options, &index);
 		if (c == -1) {
 			break;
 		}
@@ -292,6 +295,9 @@ main(int argc, char **argv)
 		case 'b':
 			no_footer = true;
 			no_header = true;
+			break;
+		case 'i':
+			ignore_init(optarg);
 			break;
 		case 'n':
 			no_duplicates = true;
@@ -315,6 +321,7 @@ main(int argc, char **argv)
 
 	desktop_entries_destroy(apps);
 	directory_entries_destroy(dirs);
+	ignore_finish();
 
 	return 0;
 }
