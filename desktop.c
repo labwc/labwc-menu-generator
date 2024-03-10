@@ -14,6 +14,7 @@
 #include <dirent.h>
 #include <stdbool.h>
 #include "desktop.h"
+#include "ignore.h"
 
 static GList *apps;
 
@@ -222,6 +223,10 @@ add_app(FILE *fp, char *filename)
 {
 	char line[4096], *p;
 	int is_desktop_entry;
+
+	if (should_ignore(filename)) {
+		return NULL;
+	}
 
 	struct app *app = calloc(1, sizeof(struct app));
 	is_desktop_entry = 0;

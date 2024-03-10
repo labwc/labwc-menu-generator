@@ -19,7 +19,7 @@ PROG = labwc-menu-generator
 
 all: $(PROG)
 
-$(PROG): main.o desktop.o
+$(PROG): main.o desktop.o ignore.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 clean:
