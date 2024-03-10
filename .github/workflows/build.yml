@@ -1,0 +1,114 @@
+# Void-musl images:
+# https://github.com/void-linux/void-containers/pkgs/container/void-musl
+#
+# Void dependencies based on:
+# https://github.com/void-linux/void-packages/blob/master/srcpkgs/labwc/template
+#
+# Recommended GH CI Void mirror based on
+# https://docs.voidlinux.org/xbps/repositories/mirrors/changing.html
+
+name: CI
+on: [pull_request]
+jobs:
+  build:
+    name: Build
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        name: [
+          Arch,
+          Debian,
+          FreeBSD,
+          Void-musl
+        ]
+        include:
+          - name: Arch
+            os: ubuntu-latest
+            container: archlinux:base-devel
+            env:
+              TARGET: 'sh -xe'
+
+          - name: Debian
+            os: ubuntu-latest
+            container: debian:testing
+            env:
+              TARGET: 'sh -xe'
+
+          - name: FreeBSD
+            os: ubuntu-latest
+            env:
+              TARGET: 'ssh freebsd /bin/sh -xe'
+
+          - name: Void-musl
+            os: ubuntu-latest
+            container: ghcr.io/void-linux/void-musl:latest
+            env:
+              TARGET: 'sh -xe'
+
+    env: ${{ matrix.env }}
+    runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container }}
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install Arch Linux dependencies
+        if: matrix.name == 'Arch'
+        run: |
+          pacman-key --init
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm git meson clang wlroots libdrm libinput \
+            wayland-protocols cairo pango libxml2 xorg-xwayland librsvg libdisplay-info
+
+      - name: Install Debian Testing dependencies
+        if: matrix.name == 'Debian'
+        run: |
+          sed -i '/^Types/ s/deb/& deb-src/' /etc/apt/sources.list.d/debian.sources
+          apt-get update
+          apt-get upgrade -y
+          apt-get install -y git gcc clang
+          apt-get build-dep -y labwc
+
+      - name: Install FreeBSD dependencies
+        if: matrix.name == 'FreeBSD'
+        uses: vmactions/freebsd-vm@v1
+        with:
+          usesh: true
+          prepare: |
+            sed -i '' 's/quarterly/latest/' /etc/pkg/FreeBSD.conf
+            pkg set -yn pkg:mesa-dri # hack to skip llvm dependency
+            pkg install -y git meson gcc pkgconf cairo pango evdev-proto \
+              hwdata wayland-protocols wlroots libdisplay-info
+          run: echo "setup done"
+
+      - name: Install Void Linux dependencies
+        if: matrix.name == 'Void-musl'
+        run: |
+          mkdir -p /etc/xbps.d
+          cp /usr/share/xbps.d/*-repository-*.conf /etc/xbps.d/
+          sed -i "s:repo-default\.voidlinux\.org:repo-ci.voidlinux.org:g" \
+            /etc/xbps.d/*-repository-*.conf
+          xbps-install -Syu || xbps-install -yu xbps
+          xbps-install -Syu
+          xbps-install -y git meson gcc clang pkg-config scdoc \
+            cairo-devel glib-devel libpng-devel librsvg-devel libxml2-devel \
+            pango-devel wlroots0.17-devel
+
+      - name: Build with gcc
+        run: |
+          echo '
+            cd "$GITHUB_WORKSPACE"
+            export CC=gcc
+            make clean
+            make
+          ' | $TARGET
+
+      - name: Build with clang
+        run: |
+          echo '
+            cd "$GITHUB_WORKSPACE"
+            export CC=clang
+            make clean
+            make
+          ' | $TARGET
