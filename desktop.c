@@ -88,6 +88,7 @@ parse_line(char *line, struct app *app, int *is_desktop_entry)
 	char *key, *value;
 	gchar **argv = g_strsplit(line, "=", 2);
 	if (g_strv_length(argv) != 2) {
+		g_strfreev(argv);
 		return;
 	}
 	key = g_strstrip(argv[0]);
