@@ -100,8 +100,8 @@ jobs:
           echo '
             cd "$GITHUB_WORKSPACE"
             export CC=gcc
-            make clean
-            make
+            meson setup build-gcc --werror
+            meson compile -C build-gcc
           ' | $TARGET
 
       - name: Build with clang
@@ -109,6 +109,6 @@ jobs:
           echo '
             cd "$GITHUB_WORKSPACE"
             export CC=clang
-            make clean
-            make
+            meson setup build-clang --werror
+            meson compile -C build-clang
           ' | $TARGET
