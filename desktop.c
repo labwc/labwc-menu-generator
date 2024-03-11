@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
+#include <sys/stat.h>
 #include <dirent.h>
 #include <stdbool.h>
 #include "desktop.h"
@@ -294,26 +295,31 @@ out:
 }
 
 static void
-traverse_directory(const char *path)
+traverse_directory(const char *dirname)
 {
+	char path[4096] = {0};
 	struct dirent *entry;
 	DIR *dp;
 
-	dp = opendir(path);
+	dp = opendir(dirname);
 	if (!dp) {
 		return;
 	}
 	while ((entry = readdir(dp))) {
-		if (entry->d_type == DT_DIR) {
+		snprintf(path, sizeof(path), "%s/%s", dirname, entry->d_name);
+
+		struct stat sb;
+		stat(path, &sb);
+		if (S_ISDIR(sb.st_mode)) {
 			if (entry->d_name[0] != '.') {
 				char new_path[PATH_MAX];
 
-				snprintf(new_path, PATH_MAX, "%s%s/", path,
+				snprintf(new_path, PATH_MAX, "%s%s/", dirname,
 					 entry->d_name);
 				traverse_directory(new_path);
 			}
-		} else if (entry->d_type == DT_REG || entry->d_type == DT_LNK) {
-			process_file(entry->d_name, path);
+		} else {
+			process_file(entry->d_name, dirname);
 		}
 	}
 	closedir(dp);
