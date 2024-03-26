@@ -56,7 +56,7 @@ jobs:
         run: |
           pacman-key --init
           pacman -Syu --noconfirm
-          pacman -S --noconfirm meson gcc clang pkgconf glib2
+          pacman -S --noconfirm meson gcc clang pkgconf glib2 perl
 
       - name: Install FreeBSD dependencies
         if: matrix.name == 'FreeBSD'
@@ -65,7 +65,7 @@ jobs:
           usesh: true
           prepare: |
             sed -i '' 's/quarterly/latest/' /etc/pkg/FreeBSD.conf
-            pkg install -y meson gcc pkgconf devel/glib20
+            pkg install -y meson gcc pkgconf devel/glib20 devel/p5-Test-Harness
           run: echo "setup done"
 
       - name: Install Void Linux dependencies
@@ -77,7 +77,7 @@ jobs:
             /etc/xbps.d/*-repository-*.conf
           xbps-install -Syu || xbps-install -yu xbps
           xbps-install -Syu
-          xbps-install -y meson gcc clang pkg-config glib-devel
+          xbps-install -y meson gcc clang pkg-config glib-devel make perl
 
       - name: Build with gcc
         run: |
@@ -95,4 +95,12 @@ jobs:
             export CC=clang
             meson setup build-clang --werror
             meson compile -C build-clang
+          ' | $TARGET
+
+      - name: Run tests
+        run: |
+          echo '
+            cd "$GITHUB_WORKSPACE"
+            cp build-gcc/labwc-menu-generator .
+            make -C t/ prove
           ' | $TARGET

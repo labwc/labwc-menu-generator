@@ -9,11 +9,11 @@ CFLAGS += `pkg-config --cflags glib-2.0`
 LIBS += `pkg-config --libs glib-2.0`
 LDFLAGS += $(LIBS)
 
-ifdef ASAN
-ASAN_FLAGS = -O0 -fsanitize=address -fno-common -fno-omit-frame-pointer -rdynamic
-CFLAGS += $(ASAN_FLAGS)
-LDFLAGS += $(ASAN_FLAGS) -fuse-ld=gold
-endif
+#ifdef ASAN
+#ASAN_FLAGS = -O0 -fsanitize=address -fno-common -fno-omit-frame-pointer -rdynamic
+#CFLAGS += $(ASAN_FLAGS)
+#LDFLAGS += $(ASAN_FLAGS) -fuse-ld=gold
+#endif
 
 PROG = labwc-menu-generator
 
