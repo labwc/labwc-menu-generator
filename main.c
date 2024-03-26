@@ -20,9 +20,11 @@ static bool no_duplicates;
 static bool no_footer;
 static bool no_header;
 static bool pipemenu;
+static bool show_desktop_filename;
 
 static const struct option long_options[] = {
 	{"bare", no_argument, NULL, 'b'},
+	{"desktop", no_argument, NULL, 'd'},
 	{"help", no_argument, NULL, 'h'},
 	{"ignore", required_argument, NULL, 'i'},
 	{"no-duplicates", no_argument, NULL, 'n'},
@@ -33,6 +35,7 @@ static const struct option long_options[] = {
 static const char labwc_menu_generator_usage[] =
 "Usage: labwc-menu-generator [options...]\n"
 "  -b, --bare               Show no header or footer\n"
+"  -d, --desktop            Add .desktop filename as a comment in the XML output\n"
 "  -h, --help               Show help message and quit\n"
 "  -i, --ignore <file>      Specify file listing .desktop files to ignore\n"
 "  -n, --no-duplicates      Limit desktop entries to one directory only\n"
@@ -62,6 +65,10 @@ ismatch(gchar **dir_categories, const char *app_categories)
 static void
 print_app_to_buffer(struct app *app, GString *submenu)
 {
+	if (show_desktop_filename) {
+		g_string_append_printf(submenu, "    <!-- %s -->\n", app->filename);
+	}
+
 	/* TODO: handle app->terminal */
 	g_string_append_printf(submenu,
 		"    <item label=\"%s\" icon=\"%s\">\n",
@@ -287,7 +294,7 @@ main(int argc, char **argv)
 	int c;
 	while (1) {
 		int index = 0;
-		c = getopt_long(argc, argv, "bhi:np", long_options, &index);
+		c = getopt_long(argc, argv, "bdhi:np", long_options, &index);
 		if (c == -1) {
 			break;
 		}
@@ -295,6 +302,9 @@ main(int argc, char **argv)
 		case 'b':
 			no_footer = true;
 			no_header = true;
+			break;
+		case 'd':
+			show_desktop_filename = true;
 			break;
 		case 'i':
 			ignore_init(optarg);
