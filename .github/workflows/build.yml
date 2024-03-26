@@ -101,5 +101,6 @@ jobs:
         run: |
           echo '
             cd "$GITHUB_WORKSPACE"
-            make check
+            cp build-gcc/labwc-menu-generator .
+            make -C t/ prove
           ' | $TARGET
