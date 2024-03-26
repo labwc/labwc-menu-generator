@@ -219,6 +219,22 @@ isprog(const char *prog)
 	return true;
 }
 
+static void
+destroy_app(struct app *app)
+{
+	g_free(app->name);
+	g_free(app->name_localized);
+	g_free(app->generic_name);
+	g_free(app->generic_name_localized);
+	g_free(app->exec);
+	g_free(app->tryexec);
+	g_free(app->working_dir);
+	g_free(app->icon);
+	g_free(app->categories);
+	g_free(app->filename);
+	g_free(app);
+}
+
 static struct app *
 add_app(FILE *fp, char *filename)
 {
@@ -254,6 +270,17 @@ add_app(FILE *fp, char *filename)
 		}
 		parse_line(line, app, &is_desktop_entry);
 	}
+
+	/*
+	 * Bail out if the .desktop file does not contain a [Desktop Entry] or
+	 * Name= field.
+	 */
+	if (!app->name) {
+		fprintf(stderr, "warn: file '%s' contains no valid desktop entry\n", filename);
+		destroy_app(app);
+		return NULL;
+	}
+
 	app->filename = strdup(filename);
 
 	/* post-processing */
@@ -340,7 +367,7 @@ compare_app_name(const void *a, const void *b)
 	bb_name = bb->name_localized ? bb->name_localized : bb->name;
 	aa_name = g_utf8_casefold(aa_name, -1);
 	bb_name = g_utf8_casefold(bb_name, -1);
-	int ret = strcmp(aa_name, bb_name);
+	int ret = g_strcmp0(aa_name, bb_name);
 	g_free((void *)aa_name);
 	g_free((void *)bb_name);
 	return ret;
@@ -405,17 +432,7 @@ desktop_entries_destroy(GList *apps)
 	GList *iter;
 	for (iter = apps; iter; iter = iter->next) {
 		struct app *app = (struct app *)iter->data;
-		g_free(app->name);
-		g_free(app->name_localized);
-		g_free(app->generic_name);
-		g_free(app->generic_name_localized);
-		g_free(app->exec);
-		g_free(app->tryexec);
-		g_free(app->working_dir);
-		g_free(app->icon);
-		g_free(app->categories);
-		g_free(app->filename);
-		g_free(app);
+		destroy_app(app);
 	}
 	g_list_free(apps);
 }
