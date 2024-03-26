@@ -101,6 +101,7 @@ jobs:
         run: |
           echo '
             cd "$GITHUB_WORKSPACE"
+            export SHELL=sh
             export BUILDDIR=../../build-gcc
             make -C t/
           ' | $TARGET
