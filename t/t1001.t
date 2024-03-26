@@ -1,5 +1,7 @@
 #!/bin/sh
 
+: ${BUILDDIR=../../build}
+
 test_description='parse .desktop files to generate openbox menu'
 . ./sharness.sh
 
@@ -10,7 +12,7 @@ test_menu() {
 	export LANG="$2"
 	cat ../t1001/"$1" >expect
 	cp -a ../t1000/applications .
-	../../labwc-menu-generator >actual
+	${BUILDDIR}/labwc-menu-generator >actual
 	test_cmp expect actual
 }
 
