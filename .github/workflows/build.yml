@@ -86,6 +86,7 @@ jobs:
             export CC=gcc
             meson setup build-gcc --werror
             meson compile -C build-gcc
+            make check
           ' | $TARGET
 
       - name: Build with clang
@@ -95,4 +96,5 @@ jobs:
             export CC=clang
             meson setup build-clang --werror
             meson compile -C build-clang
+            make check
           ' | $TARGET
