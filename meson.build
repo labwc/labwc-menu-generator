@@ -18,3 +18,5 @@ executable(
   dependencies: [glib],
   install: true,
 )
+
+subdir('t')
