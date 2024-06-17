@@ -26,6 +26,30 @@ static char name_llcc[64] = { 0 };
 static char generic_name_ll[64] = { 0 };
 static char generic_name_llcc[64] = { 0 };
 
+ /*
+  * This snippet borrowed from qemu
+  * Copyright (C) Fabrice Bellard 2006-2017 GPL-2.0
+  * https://github.com/qemu/qemu/blob/master/util/cutils.c
+  * Replaces strncpy
+  */
+void
+pstrcpy(char *buf, int buf_size, const char *str)
+{
+	int c;
+	char *q = buf;
+
+	if (buf_size <= 0)
+		return;
+
+	for(;;) {
+		c = *str++;
+		if (c == 0 || q >= buf + buf_size - 1)
+			break;
+		*q++ = c;
+	}
+	*q = '\0';
+}
+
 static void
 i18n_init(void)
 {
@@ -48,14 +72,14 @@ i18n_init(void)
 	}
 
 	/* ll_CC */
-	strncpy(llcc, p, sizeof(llcc));
+	pstrcpy(llcc, sizeof(llcc), p);
 	p = strrchr(llcc, '.');
 	if (p) {
 		*p = '\0';
 	}
 
 	/* ll */
-	strncpy(ll, llcc, sizeof(ll));
+	pstrcpy(ll, sizeof(ll), llcc);
 	p = strrchr(ll, '_');
 	if (p) {
 		*p = '\0';
@@ -303,8 +327,8 @@ process_file(char *filename, const char *path)
 		return;
 	}
 	size_t len = strlen(path);
-	strncpy(fullname, path, sizeof(fullname));
-	strncpy(fullname + len, filename, sizeof(fullname) - len);
+	pstrcpy(fullname, sizeof(fullname), path);
+	pstrcpy(fullname + len, sizeof(fullname) - len, filename);
 	FILE *fp = fopen(fullname, "r");
 	if (!fp) {
 		fprintf(stderr, "warn: could not open file %s", filename);
