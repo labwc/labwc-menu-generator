@@ -20,3 +20,4 @@ executable(
 )
 
 subdir('data')
+subdir('t')
