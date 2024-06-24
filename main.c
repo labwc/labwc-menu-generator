@@ -21,6 +21,7 @@ static bool no_footer;
 static bool no_header;
 static bool pipemenu;
 static bool show_desktop_filename;
+static char *terminal_prefix;
 
 static const struct option long_options[] = {
 	{"bare", no_argument, NULL, 'b'},
@@ -29,6 +30,7 @@ static const struct option long_options[] = {
 	{"ignore", required_argument, NULL, 'i'},
 	{"no-duplicates", no_argument, NULL, 'n'},
 	{"pipemenu", no_argument, NULL, 'p'},
+	{"terminal-prefix", required_argument, NULL, 't'},
 	{0, 0, 0, 0}
 };
 
@@ -39,7 +41,8 @@ static const char labwc_menu_generator_usage[] =
 "  -h, --help               Show help message and quit\n"
 "  -i, --ignore <file>      Specify file listing .desktop files to ignore\n"
 "  -n, --no-duplicates      Limit desktop entries to one directory only\n"
-"  -p, --pipemenu           Output in pipemenu format\n";
+"  -p, --pipemenu           Output in pipemenu format\n"
+"  -t, --terminal-prefix    Specify prefix for Terminal=true entries\n";
 
 static void
 usage(void)
@@ -69,14 +72,29 @@ print_app_to_buffer(struct app *app, GString *submenu)
 		g_string_append_printf(submenu, "    <!-- %s -->\n", app->filename);
 	}
 
-	/* TODO: handle app->terminal */
+	/*
+	 * For Terminal=true entries we prefix the command if the user has
+	 * specified a --terminal-prefix value. Typical values would be 'foot',
+	 * 'alacritty -e' or 'xterm -e'. Many terminals use the -e option, but
+	 * not all.
+	 */
+	gchar *command = app->terminal && terminal_prefix ?
+		g_strdup_printf("%s '%s'", terminal_prefix, app->exec) :
+		g_strdup_printf("%s", app->exec);
+	if (!command) {
+		fprintf(stderr, "fatal: cannot allocate");
+		exit(EXIT_FAILURE);
+	}
+
 	g_string_append_printf(submenu,
 		"    <item label=\"%s\" icon=\"%s\">\n",
 		app->name_localized ? app->name_localized : app->name, app->icon);
 	g_string_append_printf(submenu,
 		"      <action name=\"Execute\"><command>%s</command></action>\n",
-		app->exec);
+		command);
 	g_string_append_printf(submenu, "    </item>\n");
+
+	g_free(command);
 }
 
 static bool
@@ -294,7 +312,7 @@ main(int argc, char **argv)
 	int c;
 	while (1) {
 		int index = 0;
-		c = getopt_long(argc, argv, "bdhi:np", long_options, &index);
+		c = getopt_long(argc, argv, "bdhi:npt:", long_options, &index);
 		if (c == -1) {
 			break;
 		}
@@ -314,6 +332,9 @@ main(int argc, char **argv)
 			break;
 		case 'p':
 			pipemenu = true;
+			break;
+		case 't':
+			terminal_prefix = optarg;
 			break;
 		case 'h':
 		default:

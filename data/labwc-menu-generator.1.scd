@@ -36,6 +36,10 @@ in directory-schema rather than parsing .menu and .directory files.
 *-p, --pipemenu*
 	Output in pipemenu format
 
+*-t, --terminal-prefix <command>*
+	Specify prefix for Terminal=true entries, for example 'foot' or
+	'xterm -e'
+
 # AUTHORS
 
 The Labwc Team - https://github.com/labwc/labwc-menu-generator
