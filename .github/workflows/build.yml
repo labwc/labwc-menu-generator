@@ -56,7 +56,7 @@ jobs:
         run: |
           pacman-key --init
           pacman -Syu --noconfirm
-          pacman -S --noconfirm meson gcc clang pkgconf glib2
+          pacman -S --noconfirm meson gcc clang pkgconf glib2 scdoc
 
       - name: Install FreeBSD dependencies
         if: matrix.name == 'FreeBSD'
