@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openbox_menu>
 <menu id="root-menu" label="root-menu">
-  <menu id="Graphics" label="Grafik">
+  <menu id="Graphics" label="Grafik" icon="applications-graphics">
     <item label="Bildvisare" icon="gpicview">
       <action name="Execute"><command>gpicview</command></action>
     </item>
@@ -24,7 +24,7 @@
       <action name="Execute"><command>mtpaint</command></action>
     </item>
   </menu> <!-- Graphics -->
-  <menu id="Settings" label="Inställningar">
+  <menu id="Settings" label="Inställningar" icon="preferences-desktop">
     <item label="nitrogen" icon="nitrogen">
       <action name="Execute"><command>nitrogen</command></action>
     </item>
@@ -44,7 +44,7 @@
       <action name="Execute"><command>wdisplays</command></action>
     </item>
   </menu> <!-- Settings -->
-  <menu id="Internet" label="Internet">
+  <menu id="Internet" label="Internet" icon="applications-internet">
     <item label="Avahi SSH-serverbläddrare" icon="network-wired">
       <action name="Execute"><command>/usr/bin/bssh</command></action>
     </item>
@@ -70,7 +70,7 @@
       <action name="Execute"><command>/usr/bin/vivaldi-stable</command></action>
     </item>
   </menu> <!-- Internet -->
-  <menu id="Office" label="Kontorsprogram">
+  <menu id="Office" label="Kontorsprogram" icon="applications-office">
     <item label="Dokumentvisare" icon="org.gnome.Evince">
       <action name="Execute"><command>evince</command></action>
     </item>
@@ -78,7 +78,7 @@
       <action name="Execute"><command>gnumeric</command></action>
     </item>
   </menu> <!-- Office -->
-  <menu id="Multimedia" label="Multimedia">
+  <menu id="Multimedia" label="Multimedia" icon="applications-multimedia">
     <item label="Audacious" icon="audacious">
       <action name="Execute"><command>audacious</command></action>
     </item>
@@ -95,7 +95,7 @@
       <action name="Execute"><command>/usr/bin/vlc --started-from-file</command></action>
     </item>
   </menu> <!-- Multimedia -->
-  <menu id="System" label="System">
+  <menu id="System" label="System" icon="applications-system">
     <item label="Alacritty" icon="Alacritty">
       <action name="Execute"><command>alacritty</command></action>
     </item>
@@ -148,7 +148,7 @@
       <action name="Execute"><command>xterm</command></action>
     </item>
   </menu> <!-- System -->
-  <menu id="Accessories" label="Tillbehör">
+  <menu id="Accessories" label="Tillbehör" icon="applications-accessories">
     <item label="Bildvisare" icon="gpicview">
       <action name="Execute"><command>gpicview</command></action>
     </item>
@@ -177,7 +177,7 @@
       <action name="Execute"><command>vim</command></action>
     </item>
   </menu> <!-- Accessories -->
-  <menu id="Development" label="Utveckling">
+  <menu id="Development" label="Utveckling" icon="applications-development">
     <item label="CMake" icon="CMakeSetup">
       <action name="Execute"><command>cmake-gui</command></action>
     </item>
