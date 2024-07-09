@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openbox_menu>
 <menu id="root-menu" label="root-menu">
-  <menu id="Accessories" label="Accessories">
+  <menu id="Accessories" label="Accessories" icon="applications-accessories">
     <item label="File Manager PCManFM" icon="system-file-manager">
       <action name="Execute"><command>pcmanfm</command></action>
     </item>
@@ -30,7 +30,7 @@
       <action name="Execute"><command>vim</command></action>
     </item>
   </menu> <!-- Accessories -->
-  <menu id="Development" label="Development">
+  <menu id="Development" label="Development" icon="applications-development">
     <item label="CMake" icon="CMakeSetup">
       <action name="Execute"><command>cmake-gui</command></action>
     </item>
@@ -53,7 +53,7 @@
       <action name="Execute"><command>gtk4-widget-factory</command></action>
     </item>
   </menu> <!-- Development -->
-  <menu id="Graphics" label="Graphics">
+  <menu id="Graphics" label="Graphics" icon="applications-graphics">
     <item label="Document Viewer" icon="org.gnome.Evince">
       <action name="Execute"><command>evince</command></action>
     </item>
@@ -76,7 +76,7 @@
       <action name="Execute"><command>mtpaint</command></action>
     </item>
   </menu> <!-- Graphics -->
-  <menu id="Internet" label="Internet">
+  <menu id="Internet" label="Internet" icon="applications-internet">
     <item label="Avahi SSH Server Browser" icon="network-wired">
       <action name="Execute"><command>/usr/bin/bssh</command></action>
     </item>
@@ -102,7 +102,7 @@
       <action name="Execute"><command>/usr/bin/vivaldi-stable</command></action>
     </item>
   </menu> <!-- Internet -->
-  <menu id="Multimedia" label="Multimedia">
+  <menu id="Multimedia" label="Multimedia" icon="applications-multimedia">
     <item label="Audacious" icon="audacious">
       <action name="Execute"><command>audacious</command></action>
     </item>
@@ -119,7 +119,7 @@
       <action name="Execute"><command>/usr/bin/vlc --started-from-file</command></action>
     </item>
   </menu> <!-- Multimedia -->
-  <menu id="Office" label="Office">
+  <menu id="Office" label="Office" icon="applications-office">
     <item label="Document Viewer" icon="org.gnome.Evince">
       <action name="Execute"><command>evince</command></action>
     </item>
@@ -127,7 +127,7 @@
       <action name="Execute"><command>gnumeric</command></action>
     </item>
   </menu> <!-- Office -->
-  <menu id="Settings" label="Settings">
+  <menu id="Settings" label="Settings" icon="preferences-desktop">
     <item label="Desktop Preferences" icon="user-desktop">
       <action name="Execute"><command>pcmanfm --desktop-pref</command></action>
     </item>
@@ -147,7 +147,7 @@
       <action name="Execute"><command>wdisplays</command></action>
     </item>
   </menu> <!-- Settings -->
-  <menu id="System" label="System">
+  <menu id="System" label="System" icon="applications-system">
     <item label="Alacritty" icon="Alacritty">
       <action name="Execute"><command>alacritty</command></action>
     </item>

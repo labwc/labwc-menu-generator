@@ -197,8 +197,8 @@ print_menu(GList *dirs, GList *apps)
 		if (!submenu->len) {
 			continue;
 		}
-		printf("  <menu id=\"%s\" label=\"%s\">\n",
-			dir->name, dir->name_localized ? : dir->name);
+		printf("  <menu id=\"%s\" label=\"%s\" icon=\"%s\">\n",
+			dir->name, dir->name_localized ? : dir->name, dir->icon);
 		printf("%s", submenu->str);
 		printf("  </menu> <!-- %s -->\n", dir->name);
 	}
