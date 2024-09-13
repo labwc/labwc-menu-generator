@@ -21,6 +21,7 @@ static bool no_footer;
 static bool no_header;
 static bool pipemenu;
 static bool show_desktop_filename;
+static bool show_icons;
 static char *terminal_prefix;
 
 static const struct option long_options[] = {
@@ -28,6 +29,7 @@ static const struct option long_options[] = {
 	{"desktop", no_argument, NULL, 'd'},
 	{"help", no_argument, NULL, 'h'},
 	{"ignore", required_argument, NULL, 'i'},
+	{"icons", no_argument, NULL, 'I'},
 	{"no-duplicates", no_argument, NULL, 'n'},
 	{"pipemenu", no_argument, NULL, 'p'},
 	{"terminal-prefix", required_argument, NULL, 't'},
@@ -40,6 +42,7 @@ static const char labwc_menu_generator_usage[] =
 "  -d, --desktop            Add .desktop filename as a comment in the XML output\n"
 "  -h, --help               Show help message and quit\n"
 "  -i, --ignore <file>      Specify file listing .desktop files to ignore\n"
+"  -I, --icons              Add icon=\"\" attribute\n"
 "  -n, --no-duplicates      Limit desktop entries to one directory only\n"
 "  -p, --pipemenu           Output in pipemenu format\n"
 "  -t, --terminal-prefix    Specify prefix for Terminal=true entries\n";
@@ -86,9 +89,14 @@ print_app_to_buffer(struct app *app, GString *submenu)
 		exit(EXIT_FAILURE);
 	}
 
-	g_string_append_printf(submenu,
-		"    <item label=\"%s\" icon=\"%s\">\n",
-		app->name_localized ? app->name_localized : app->name, app->icon);
+	g_string_append_printf(submenu, "    <item label=\"%s\"",
+		app->name_localized ? app->name_localized : app->name);
+	if (show_icons) {
+		g_string_append_printf(submenu, " icon=\"%s\"", app->icon);
+	}
+	g_string_append_printf(submenu, ">\n");
+
+
 	g_string_append_printf(submenu,
 		"      <action name=\"Execute\"><command>%s</command></action>\n",
 		command);
@@ -197,8 +205,13 @@ print_menu(GList *dirs, GList *apps)
 		if (!submenu->len) {
 			continue;
 		}
-		printf("  <menu id=\"%s\" label=\"%s\" icon=\"%s\">\n",
-			dir->name, dir->name_localized ? : dir->name, dir->icon);
+
+		printf("  <menu id=\"%s\" label=\"%s\"", dir->name, dir->name_localized ? : dir->name);
+		if (show_icons) {
+			printf(" icon=\"%s\"", dir->icon);
+		}
+		printf(">\n");
+
 		printf("%s", submenu->str);
 		printf("  </menu> <!-- %s -->\n", dir->name);
 	}
@@ -312,7 +325,7 @@ main(int argc, char **argv)
 	int c;
 	while (1) {
 		int index = 0;
-		c = getopt_long(argc, argv, "bdhi:npt:", long_options, &index);
+		c = getopt_long(argc, argv, "bdhi:Inpt:", long_options, &index);
 		if (c == -1) {
 			break;
 		}
@@ -326,6 +339,9 @@ main(int argc, char **argv)
 			break;
 		case 'i':
 			ignore_init(optarg);
+			break;
+		case 'I':
+			show_icons = true;
 			break;
 		case 'n':
 			no_duplicates = true;
