@@ -30,6 +30,9 @@ in directory-schema rather than parsing .menu and .directory files.
 *-i, --ignore <file>*
 	Specify file listing .desktop files to ignore
 
+*-I, --icons*
+	Add icon="" attribute
+
 *-n, --no-duplicates*
 	Limit desktop entries to one directory only
 
