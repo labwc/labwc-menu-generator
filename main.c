@@ -91,7 +91,7 @@ print_app_to_buffer(struct app *app, GString *submenu)
 
 	g_string_append_printf(submenu, "    <item label=\"%s\"",
 		app->name_localized ? app->name_localized : app->name);
-	if (show_icons) {
+	if (show_icons && app->icon) {
 		g_string_append_printf(submenu, " icon=\"%s\"", app->icon);
 	}
 	g_string_append_printf(submenu, ">\n");
@@ -207,7 +207,7 @@ print_menu(GList *dirs, GList *apps)
 		}
 
 		printf("  <menu id=\"%s\" label=\"%s\"", dir->name, dir->name_localized ? : dir->name);
-		if (show_icons) {
+		if (show_icons && dir->icon) {
 			printf(" icon=\"%s\"", dir->icon);
 		}
 		printf(">\n");
