@@ -1,5 +1,5 @@
 # labwc-menu-generator
-
+[![Packaging status](https://repology.org/badge/vertical-allrepos/labwc-menu-generator.svg)](https://repology.org/project/labwc-menu-generator/versions)
 ## Features
 
 - Independent of Desktop Environments and associated menu-packages.  This is
