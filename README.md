@@ -1,5 +1,5 @@
 # labwc-menu-generator
-[![Packaging status](https://repology.org/badge/vertical-allrepos/labwc-menu-generator.svg)](https://repology.org/project/labwc-menu-generator/versions)
+
 ## Features
 
 - Independent of Desktop Environments and associated menu-packages.  This is
@@ -17,3 +17,5 @@
 [Desktop Entry Specification]: https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-1.1.html
 [Menu Specification]: https://specifications.freedesktop.org/menu-spec/menu-spec-1.0.html
 
+## Repology
+[![Packaging status](https://repology.org/badge/vertical-allrepos/labwc-menu-generator.svg)](https://repology.org/project/labwc-menu-generator/versions)
