@@ -17,5 +17,17 @@
 [Desktop Entry Specification]: https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-1.1.html
 [Menu Specification]: https://specifications.freedesktop.org/menu-spec/menu-spec-1.0.html
 
+## 2. Build
+
+To build, simply run:
+
+    meson setup build/
+    meson compile -C build/
+
+Run-time dependencies include: `glib-2.0`
+
+Build dependencies include: `meson`, `ninja`, `gcc`/`clang`
+
 ## Repology
+
 [![Packaging status](https://repology.org/badge/vertical-allrepos/labwc-menu-generator.svg)](https://repology.org/project/labwc-menu-generator/versions)
