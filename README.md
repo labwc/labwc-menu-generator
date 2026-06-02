@@ -14,8 +14,8 @@
 
 - Localized values for .desktop file keys such as `Name[sr_YU]`
 
-[Desktop Entry Specification]: https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-1.1.html
-[Menu Specification]: https://specifications.freedesktop.org/menu-spec/menu-spec-1.0.html
+[Desktop Entry Specification]: https://specifications.freedesktop.org/desktop-entry/1.1/
+[Menu Specification]: https://specifications.freedesktop.org/menu/1.0/
 
 ## 2. Build
 
