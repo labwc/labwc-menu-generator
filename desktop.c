@@ -348,7 +348,6 @@ out:
 static void
 traverse_directory(const char *dirname)
 {
-	char path[4096] = {0};
 	struct dirent *entry;
 	DIR *dp;
 
@@ -357,17 +356,17 @@ traverse_directory(const char *dirname)
 		return;
 	}
 	while ((entry = readdir(dp))) {
-		snprintf(path, sizeof(path), "%s/%s", dirname, entry->d_name);
+		char *path = g_build_filename(dirname, entry->d_name, NULL);
 
 		struct stat sb;
-		stat(path, &sb);
+		if (stat(path, &sb) == -1) {
+			g_free(path);
+			continue;
+		}
+
 		if (S_ISDIR(sb.st_mode)) {
 			if (entry->d_name[0] != '.') {
-				char new_path[PATH_MAX];
-
-				snprintf(new_path, PATH_MAX, "%s%s/", dirname,
-					 entry->d_name);
-				traverse_directory(new_path);
+				traverse_directory(path);
 			}
 		} else {
 			process_file(entry->d_name, dirname);
