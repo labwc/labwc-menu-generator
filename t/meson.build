@@ -10,6 +10,7 @@ test_lib = static_library(
 tests = [
   't1000.t.c',
   't1001.t.c',
+  't1002.t.c',
 ]
 
 foreach t : tests
