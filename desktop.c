@@ -360,14 +360,14 @@ traverse_directory(const char *dirname)
                         continue;
 		}
 
+		/* We do not use entry->d_type as it is less portable */
 		if (S_ISDIR(sb.st_mode)) {
-			if (entry->d_name[0] != '.') {
-				char new_path[4096];
-
-				snprintf(new_path, sizeof(new_path), "%s%s/", dirname,
-					 entry->d_name);
-				traverse_directory(new_path);
+			if (entry->d_name[0] == '.') {
+				continue;
 			}
+			char path[4096];
+			snprintf(path, sizeof(path), "%s%s/", dirname, entry->d_name);
+			traverse_directory(path);
 		} else {
 			process_file(entry->d_name, dirname);
 		}
