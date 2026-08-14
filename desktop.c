@@ -7,6 +7,7 @@
 #define _DEFAULT_SOURCE
 #include <ctype.h>
 #include <glib.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -348,19 +349,17 @@ out:
 static void
 traverse_directory(const char *dirname)
 {
-	char path[4096] = {0};
 	struct dirent *entry;
-	DIR *dp;
-
-	dp = opendir(dirname);
+	DIR *dp = opendir(dirname);
 	if (!dp) {
 		return;
 	}
 	while ((entry = readdir(dp))) {
-		snprintf(path, sizeof(path), "%s/%s", dirname, entry->d_name);
-
 		struct stat sb;
-		stat(path, &sb);
+		if (fstatat(dirfd(dp), entry->d_name, &sb, AT_SYMLINK_NOFOLLOW) == -1) {
+                        continue;
+		}
+
 		if (S_ISDIR(sb.st_mode)) {
 			if (entry->d_name[0] != '.') {
 				char new_path[4096];
