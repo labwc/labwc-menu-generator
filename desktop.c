@@ -363,9 +363,9 @@ traverse_directory(const char *dirname)
 		stat(path, &sb);
 		if (S_ISDIR(sb.st_mode)) {
 			if (entry->d_name[0] != '.') {
-				char new_path[PATH_MAX];
+				char new_path[4096];
 
-				snprintf(new_path, PATH_MAX, "%s%s/", dirname,
+				snprintf(new_path, sizeof(new_path), "%s%s/", dirname,
 					 entry->d_name);
 				traverse_directory(new_path);
 			}
