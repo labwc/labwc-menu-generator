@@ -323,7 +323,7 @@ process_file(char *filename, const char *path)
 {
 	char fullname[4096];
 
-	if (!strstr(filename, ".desktop")) {
+	if (!g_str_has_suffix(filename, ".desktop")) {
 		return;
 	}
 	size_t len = strlen(path);
