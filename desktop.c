@@ -368,7 +368,7 @@ traverse_directory(const char *dirname)
 			char path[4096];
 			snprintf(path, sizeof(path), "%s%s/", dirname, entry->d_name);
 			traverse_directory(path);
-		} else {
+		} else if (S_ISREG(sb.st_mode) || S_ISLNK(sb.st_mode)) {
 			process_file(entry->d_name, dirname);
 		}
 	}
