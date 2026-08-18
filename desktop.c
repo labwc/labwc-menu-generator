@@ -367,7 +367,7 @@ traverse_directory(int fd)
 		}
 
 		if (S_ISDIR(sb.st_mode)) {
-			if (entry->d_name[0] == '.') {
+			if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) {
 				continue;
 			}
 			int child = openat(fd, entry->d_name,  O_RDONLY | O_DIRECTORY);
