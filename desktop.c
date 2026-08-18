@@ -5,6 +5,7 @@
  */
 #define _POSIX_C_SOURCE 200809L
 #define _DEFAULT_SOURCE
+#include <assert.h>
 #include <ctype.h>
 #include <glib.h>
 #include <fcntl.h>
@@ -15,6 +16,7 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <stdbool.h>
+#include <unistd.h>
 #include "desktop.h"
 #include "ignore.h"
 
@@ -320,56 +322,61 @@ add_app(FILE *fp, char *filename)
 }
 
 static void
-process_file(char *filename, const char *path)
+process_file(char *filename, int dirfd)
 {
-	char fullname[4096];
-
 	if (!g_str_has_suffix(filename, ".desktop")) {
 		return;
 	}
-	size_t len = strlen(path);
-	pstrcpy(fullname, sizeof(fullname), path);
-	pstrcpy(fullname + len, sizeof(fullname) - len, filename);
-	FILE *fp = fopen(fullname, "r");
-	if (!fp) {
+	int fd = openat(dirfd, filename, O_RDONLY);
+	if (fd == -1) {
 		fprintf(stderr, "warn: could not open file %s", filename);
 		return;
 	}
 	if (is_duplicate_desktop_file(filename)) {
 		goto out;
 	}
+
+	FILE *fp = fdopen(fd, "r");
+	if (!fp) {
+		goto out;
+	}
 	struct app *app = add_app(fp, filename);
 	if (app) {
 		apps = g_list_append(apps, app);
 	}
-out:
 	fclose(fp);
+
+out:
+	close(fd);
 }
 
 static void
-traverse_directory(const char *dirname)
+traverse_directory(int fd)
 {
-	struct dirent *entry;
-	DIR *dp = opendir(dirname);
+	DIR *dp = fdopendir(fd);
 	if (!dp) {
 		return;
 	}
+
+	struct dirent *entry;
 	while ((entry = readdir(dp))) {
+		/* We prefer stat over entry->d_type for portability */
 		struct stat sb;
 		if (fstatat(dirfd(dp), entry->d_name, &sb, AT_SYMLINK_NOFOLLOW) == -1) {
                         continue;
 		}
 
-		/* We do not use entry->d_type as it is less portable */
 		if (S_ISDIR(sb.st_mode)) {
 			if (entry->d_name[0] == '.') {
 				continue;
 			}
-			char path[4096];
-			snprintf(path, sizeof(path), "%s%s/", dirname, entry->d_name);
-			traverse_directory(path);
+			int child = openat(fd, entry->d_name,  O_RDONLY | O_DIRECTORY);
+			if (child == -1) {
+				continue;
+			}
+			traverse_directory(child);
 		} else if (S_ISREG(sb.st_mode) || S_ISLNK(sb.st_mode)) {
-			process_file(entry->d_name, dirname);
+			process_file(entry->d_name, fd);
 		}
 	}
 	closedir(dp);
@@ -394,6 +401,17 @@ compare_app_name(const void *a, const void *b)
 	g_free((void *)aa_name);
 	g_free((void *)bb_name);
 	return ret;
+}
+
+static void
+process_directory(const char *dirname)
+{
+	assert(dirname);
+	int fd = open(dirname, O_RDONLY | O_DIRECTORY);
+	if (fd == -1) {
+		return;
+	}
+	traverse_directory(fd);
 }
 
 static struct  {
@@ -430,14 +448,13 @@ desktop_entries_create(void)
 			gchar **prefixes = g_strsplit(env, ":", -1);
 			for (gchar **p = prefixes; *p; p++) {
 				g_string_printf(s, "%s%s/applications/", *p,
-						xdg_data_dirs[i].path);
-				traverse_directory(s->str);
+					xdg_data_dirs[i].path);
+				process_directory(s->str);
 			}
 			g_strfreev(prefixes);
 		} else {
-			g_string_printf(s, "%s/applications/",
-					xdg_data_dirs[i].path);
-			traverse_directory(s->str);
+			g_string_printf(s, "%s/applications/", xdg_data_dirs[i].path);
+			process_directory(s->str);
 		}
 		if (getenv("LABWC_MENU_GENERATOR_DEBUG_FIRST_DIR_ONLY")) {
 			break;
