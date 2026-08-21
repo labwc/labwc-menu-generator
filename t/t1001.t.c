@@ -21,7 +21,7 @@ int main(void)
 	setenv("LANG", "sv_SE.utf8", 1);
 	char command[1000];
 	snprintf(command, sizeof(command), "./labwc-menu-generator -I >%s", actual);
-	system(command);
+	(void)system(command);
 	bool pass = test_cmp_files(actual, expect);
 	if (pass) {
 		unlink(actual);
