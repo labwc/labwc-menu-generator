@@ -11,6 +11,7 @@ tests = [
   't1000.t.c',
   't1001.t.c',
   't1002.t.c',
+  't1003.t.c',
 ]
 
 foreach t : tests
