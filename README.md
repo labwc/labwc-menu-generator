@@ -201,7 +201,7 @@ If you wanted to take another step on the journey, adding an abstraction layer
 or a dedicated menu syntax could provide a neat solution to end-users.
 
 This simple example provides XML pre-processing on a user configuration file.
-To try this out, give the script below a name and call it from menu.xlm just
+To try this out, give the script below a name and call it from menu.xml just
 in the example above with `example-dynamic-root-menu.sh`.
 
 ```bash
