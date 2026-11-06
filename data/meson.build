@@ -11,6 +11,6 @@ if scdoc.found()
     feed: true,
     capture: true,
     install: true,
-    install_dir : join_paths(get_option('datadir'), 'man', 'man1')
+    install_dir : join_paths(get_option('mandir'), 'man', 'man1')
   )
 endif
