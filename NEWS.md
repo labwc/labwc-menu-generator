@@ -4,7 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [0.2.1] - 2025-11-14
+## [0.2.2] - 2026-11-15
+
+### Fixed
+
+- Fix mandir path build error @zeusgoose [#52]
+
+## [0.2.1] - 2026-11-14
 
 ### Fixed
 
@@ -25,4 +31,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 [#28]: https://github.com/labwc/labwc/pull/28
 [#41]: https://github.com/labwc/labwc/pull/41
 [#42]: https://github.com/labwc/labwc/pull/42
-
+[#52]: https://github.com/labwc/labwc/pull/52
